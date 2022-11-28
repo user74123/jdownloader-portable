@@ -1,0 +1,70 @@
+name: "Update"
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions: write-all
+
+jobs:
+  update:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3.1.0
+    - name: Update
+      shell: bash
+      run: |
+        # Configure git to be more predictable and deterministic
+        git config core.autocrlf false
+        git config core.ignorecase false
+        git config core.fscache true
+        git config core.longpaths true
+        git config diff.renameLimit 0
+        git config status.renameLimit 0
+        git config merge.renameLimit 0
+        git config http.lowSpeedLimit 0
+        git config http.lowSpeedTime 300
+        git config http.postBuffer 1048576000
+        git config pack.threads 1
+        git config index.threads 0
+        git reset --hard HEAD
+        git clean -dffx
+        
+        # Configure JDownloader
+        mkdir -p "App/JDownloader/cfg"
+        echo -n '{
+        "oncloseaction" : "EXIT"
+        }' > App/JDownloader/cfg/org.jdownloader.gui.jdtrayicon.TrayExtension.json
+        oldrevision=$(cat App/JDownloader/update/versioninfo/JD/rev)
+        echo -n "$oldrevision" > oldrevision.txt
+    - name: Update
+      shell: cmd
+      run: |
+        start "" JDownloaderPortable.exe -forceupdate
+        ping 127.0.0.1 -n 300 >nul
+        taskkill /im javaw.exe
+        ping 127.0.0.1 -n 30 >nul
+        taskkill /f /im javaw.exe
+        ping 127.0.0.1 -n 3 >nul
+    - name: Update
+      shell: bash
+      run: |
+        # Commit
+        oldrevision=$(cat oldrevision.txt)
+        rm oldrevision.txt
+        git add .
+        newrevision=$(cat App/JDownloader/update/versioninfo/JD/rev)
+        if [ "$oldrevision" == "$newrevision" ]; then
+            git -c user.name="GitHub" -c user.email="noreply@github.com" commit --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" -m"Update JDownloader" | sed -n 1p
+        else
+            git -c user.name="GitHub" -c user.email="noreply@github.com" commit --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" -m"Update JDownloader to revision $newrevision" | sed -n 1p
+            git tag "$newrevision"
+        fi
+        git status --porcelain
+        git clean -dffx
+        
+        # Push
+        git push
+        git push --tags
