@@ -57,7 +57,9 @@ jobs:
         git add .
         newrevision=$(cat App/JDownloader/update/versioninfo/JD/rev)
         if [ "$oldrevision" == "$newrevision" ]; then
+            set +e
             git -c user.name="GitHub" -c user.email="noreply@github.com" commit --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" -m"Update JDownloader" | sed -n 1p
+            set -e
         else
             git -c user.name="GitHub" -c user.email="noreply@github.com" commit --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" -m"Update JDownloader to revision $newrevision" | sed -n 1p
             git tag "$newrevision"
