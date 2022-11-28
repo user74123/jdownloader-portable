@@ -2,7 +2,7 @@
 
 ## Download management tool
 
-JDownloader Portable is the JDownloader download management tool packaged with a PortableApps.com launcher as a [portable app](https://portableapps.com/about/what_is_a_portable_app), so you can download from any computer. It has all the same features as JDownloader, plus, it leaves no personal information behind on the machine you run it on, so you can take it with you wherever you go. [Learn more about JDownloader...](http://jdownloader.org/)
+JDownloader Portable is the JDownloader download management tool packaged with a PortableApps.com launcher as a [portable app](https://portableapps.com/about/what_is_a_portable_app), so you can download from any computer. It has all the same features as JDownloader, plus, it leaves no personal information behind on the machine you run it on, so you can take it with you wherever you go. [Learn more about JDownloader...](https://jdownloader.org/)
 
 [Go to the JDownloader Portable Homepage >>](https://portableapps.com/node/53823)
 
