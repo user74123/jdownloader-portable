@@ -33,10 +33,9 @@ jobs:
         git clean -dffx
         
         # Configure JDownloader
-        mkdir -p "App/JDownloader/cfg"
-        echo -n '{
-        "oncloseaction" : "EXIT"
-        }' > App/JDownloader/cfg/org.jdownloader.gui.jdtrayicon.TrayExtension.json
+        mkdir -p "Data/cfg"
+        echo -n '{"oncloseaction":"EXIT"}' > Data/cfg/org.jdownloader.gui.jdtrayicon.TrayExtension.json
+        echo -n '{"clipboarddisabledwarningflashenabled":false,"clipboardmonitored":false}' > Data/cfg/org.jdownloader.settings.GraphicalUserInterfaceSettings.json
         oldrevision=$(cat App/JDownloader/update/versioninfo/JD/rev)
         echo -n "$oldrevision" > oldrevision.txt
     - name: Update
