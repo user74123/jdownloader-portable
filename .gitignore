@@ -6,6 +6,8 @@
 /App/JDownloader/tmp/hosterCache
 /App/JDownloader/tmp/invalidextensions
 /App/JDownloader/tmp/invalidplugins
+/App/JDownloader/tmp/lastChanceDst*
+/App/JDownloader/tmp/extensioncache/
 /App/JDownloader/tmp/jna/
 /App/JDownloader/tmp/update/
 /Data/
