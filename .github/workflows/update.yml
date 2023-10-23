@@ -44,7 +44,7 @@ jobs:
         start "" JDownloaderPortable.exe -forceupdate
         ping 127.0.0.1 -n 300 >nul
         taskkill /im javaw.exe
-        ping 127.0.0.1 -n 30 >nul
+        ping 127.0.0.1 -n 90 >nul
         taskkill /f /im javaw.exe
         ping 127.0.0.1 -n 3 >nul
     - name: Update
